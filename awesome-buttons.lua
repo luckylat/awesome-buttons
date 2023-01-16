@@ -1,6 +1,8 @@
 local wibox = require("wibox")
 local gears = require("gears")
 
+local naughty = require("naughty");
+
 local buttons = {}
 
 buttons.with_icon = function(args)
@@ -13,7 +15,9 @@ buttons.with_icon = function(args)
     local onclick = args.onclick or function () end
 
     if icon:sub(1, 1) ~= '/' then
-        icon = os.getenv("HOME") .. '/.config/awesome/awesome-buttons/icons/' .. icon .. '.svg'
+        local filename = debug.getinfo(1,"S").source:sub(2)
+        local current_path = string.gsub(filename,"/[^/]*$","/") 
+        icon = current_path .. 'icons/' .. icon .. '.svg'
     end
 
     local result = wibox.widget{
